@@ -3,7 +3,6 @@ package ru.skillbranch.devintensive.models
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
-
 data class User (
     /**
      * Primary constructor
@@ -34,7 +33,7 @@ data class User (
         fun makeUser(fullName: String?): User {
             lastId++
             val (firstName, lastName) = Utils.pastFullName(fullName)
-            return User(id ="$lastId", firstName = firstName, lastName = lastName, null)
+            return User(id ="$lastId", firstName = firstName, lastName = lastName, avatar = null)
         }
     }
 

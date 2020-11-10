@@ -1,6 +1,5 @@
 package ru.skillbranch.devintensive.extensions
 
-
 fun String.truncate(countSymbols: Int = 16): String {
     var result = this.trim()
     if (result.length > countSymbols) {
