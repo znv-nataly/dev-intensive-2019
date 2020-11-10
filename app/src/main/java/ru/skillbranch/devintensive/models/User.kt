@@ -32,7 +32,7 @@ data class User (
         private var lastId: Int = -1
         fun makeUser(fullName: String?): User {
             lastId++
-            val (firstName, lastName) = Utils.pastFullName(fullName)
+            val (firstName, lastName) = Utils.parseFullName(fullName)
             return User(id ="$lastId", firstName = firstName, lastName = lastName, avatar = null)
         }
     }

@@ -4,7 +4,7 @@ import java.util.*
 
 object Utils {
 
-    fun pastFullName(fullName: String?): Pair<String?, String?> {
+    fun parseFullName(fullName: String?): Pair<String?, String?> {
         val fullNameTrim = fullName?.replace("  ", " ")?.trim()
         if (fullNameTrim.isNullOrBlank())
             return null to null
@@ -15,7 +15,6 @@ object Utils {
         return firstName to lastName // Pair(firstName, lastName)
     }
 
-    @ExperimentalStdlibApi
     fun transliteration(payload: String, divider: String = " "): String {
         val rules: Map<String, String> = mapOf(
             "а" to "a", "б" to "b", "в" to "v", "г" to "g", "д" to "d", "е" to "e", "ё" to "e",
@@ -25,11 +24,23 @@ object Utils {
             "ы" to "i", "ь" to "", "э" to "e", "ю" to "yu", "я" to "ya"
         )
 
-        var result = payload.trim()
-        for (letter in rules) {
-            result = letter.key.toRegex().replace(result, letter.value)
-            result = letter.key.toUpperCase(Locale("ru")).toRegex()
-                .replace(result, letter.value.capitalize(Locale("ru")))
+        val payloadTrim = payload.trim()
+        var result = ""
+        for (letter in payloadTrim) {
+            if (rules.contains(letter.toLowerCase().toString())) {
+                if (letter.isUpperCase()) {
+                    // make first letter is upper case
+                    val firstUpperCase = rules[letter.toLowerCase().toString()]?.getOrNull(0)?.toUpperCase()
+                    if (firstUpperCase !== null) {
+                        val value = rules[letter.toLowerCase().toString()]?.substring(1).toString()
+                        result += firstUpperCase + value
+                    }
+                } else {
+                    result += rules[letter.toString()]
+                }
+            } else {
+                result += letter
+            }
         }
 
         if (divider != " ") {
