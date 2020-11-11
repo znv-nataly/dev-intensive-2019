@@ -37,34 +37,34 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 
     var result = ""
     when {
-        diffAbs in 0 until SECOND -> {
+        diffAbs in 0..SECOND -> {
             result = "только что"
         }
-        diffAbs in SECOND until 45 * SECOND -> {
+        (diffAbs > SECOND && diffAbs <= 45 * SECOND) -> {
             result = "${prefix}несколько секунд$postfix"
         }
-        diffAbs in 45 * SECOND until 75 * SECOND -> {
+        (diffAbs > 45 * SECOND && diffAbs <= 75 * SECOND) -> {
             result = "${prefix}минуту$postfix"
         }
-        diffAbs in 75 * SECOND until 45 * MINUTE -> {
+        (diffAbs > 75 * SECOND && diffAbs <= 45 * MINUTE) -> {
             val count = (diffAbs / MINUTE).toInt()
-            result = "$prefix$count ${TimeUnits.MINUTE.plural(count)}$postfix"
+            result = "$prefix${TimeUnits.MINUTE.plural(count)}$postfix"
         }
-        diffAbs in 45 * MINUTE until 75 * MINUTE -> {
+        (diffAbs > 45 * MINUTE && diffAbs <= 75 * MINUTE) -> {
             result = "${prefix}час$postfix"
         }
-        diffAbs in 75 * MINUTE until 22 * HOUR -> {
+        (diffAbs > 75 * MINUTE && diffAbs <= 22 * HOUR) -> {
             val count = (diffAbs / HOUR).toInt()
-            result = "$prefix$count ${TimeUnits.HOUR.plural(count)}$postfix"
+            result = "$prefix${TimeUnits.HOUR.plural(count)}$postfix"
         }
-        diffAbs in 22 * HOUR until 26 * HOUR -> {
+        (diffAbs > 22 * HOUR && diffAbs <= 26 * HOUR) -> {
             result = "${prefix}день$postfix"
         }
-        diffAbs in 26 * HOUR until 360 * DAY -> {
+        (diffAbs > 26 * HOUR && diffAbs <= 360 * DAY) -> {
             val count = (diffAbs / DAY).toInt()
-            result = "$prefix$count ${TimeUnits.DAY.plural(count)}$postfix"
+            result = "$prefix${TimeUnits.DAY.plural(count)}$postfix"
         }
-        diffAbs >= 360 * DAY -> {
+        diffAbs > 360 * DAY -> {
             result = if (diff > 0) "более чем через год" else "более года назад"
         }
     }
@@ -74,43 +74,18 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 
 enum class TimeUnits {
 
-    SECOND {
-        override fun plural(value: Int): String {
-            val pluralList: List<String> = listOf( "секунд", "секунду", "секунды")
-            val v = if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
-            return pluralList[v]
-        }
-    },
-    MINUTE {
-        override fun plural(value: Int): String {
-            val pluralList: List<String> = listOf("минут", "минуту", "минуты")
-            val v = if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
-            return pluralList[v]
-        }
-    },
-    HOUR {
-        override fun plural(value: Int): String {
-            val pluralList: List<String> = listOf("часов", "час", "часа")
-            val v = if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
-            return pluralList[v]
-        }
-    },
-    DAY {
-        override fun plural(value: Int): String {
-            val pluralList: List<String> = listOf("дней", "день", "дня")
-            val v = if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
-            return pluralList[v]
-        }
-    };
+    SECOND,
+    MINUTE,
+    HOUR,
+    DAY;
 
-    abstract fun plural(value: Int): String
-
-//    fun plural(value: Int): String {
-//        val pluralList: Map<Int, Map<TimeUnits, String>> = mapOf(
-//                0 to mapOf(SECOND to "секунд",  MINUTE to "минут",  HOUR to "часов", DAY to "дней"),
-//                1 to mapOf(SECOND to "секунду", MINUTE to "минуту", HOUR to "час",   DAY to "день"),
-//                2 to mapOf(SECOND to "секунды", MINUTE to "минуты", HOUR to "часа",  DAY to "дня"))
-//        val v = if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
-//        return pluralList[v]?.get(this).toString()
-//    }
+    fun plural(value: Int): String {
+        val pluralList: List<Map<TimeUnits, String>> = listOf(
+                mapOf(SECOND to "секунд",  MINUTE to "минут",  HOUR to "часов", DAY to "дней"),
+                mapOf(SECOND to "секунду", MINUTE to "минуту", HOUR to "час",   DAY to "день"),
+                mapOf(SECOND to "секунды", MINUTE to "минуты", HOUR to "часа",  DAY to "дня"))
+        val v = if (value % 10 == 0 || (value % 10 in 5..9) || (value % 100 in 11..19)) 0 else if (value % 10 == 1) 1 else 2
+            //if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
+        return "$value ${pluralList[v][this].toString()}"
+    }
 }

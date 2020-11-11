@@ -20,11 +20,11 @@ data class User (
     /**
      * Secondary constructor
      */
-//    constructor(id: String, firstName: String?, lastName: String?): this(
-//        id = id,
-//        firstName = firstName,
-//        lastName = lastName,
-//        avatar = null)
+    constructor(id: String, firstName: String?, lastName: String?): this(
+        id = id,
+        firstName = firstName,
+        lastName = lastName,
+        avatar = null)
     /**
      * Static functions
      */
