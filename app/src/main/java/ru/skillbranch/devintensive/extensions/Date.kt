@@ -73,8 +73,18 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 }
 
 enum class TimeUnits {
+
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Int): String {
+        val pluralList: Map<Int, Map<TimeUnits, String>> = mapOf(
+                0 to mapOf(SECOND to "секунд",  MINUTE to "минут",  HOUR to "часов", DAY to "дней"),
+                1 to mapOf(SECOND to "секунду", MINUTE to "минуту", HOUR to "час",   DAY to "день"),
+                2 to mapOf(SECOND to "секунды", MINUTE to "минуты", HOUR to "часа",  DAY to "дня"))
+        val v = if (value % 10 == 0 || (value % 10 in 5..9)) 0 else if (value % 10 in 2..4) 2 else 1
+        return pluralList[v]?.get(this).toString()
+    }
 }
