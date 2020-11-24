@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Chat Dev Intensive</string>
     <string name="input_text">Введите текст</string>
+
+    <string name="profile_user_name">John Doe</string>
+    <string name="profile_user_rank">Junior Android Developer</string>
+    <string name="profile_label_rating">Рейтинг</string>
+    <string name="profile_label_respect">Уважение</string>
+    <string name="profile_respect">0</string>
+
+    <string name="profile_hint_last_name">Фамилия</string>
+    <string name="profile_hint_first_name">Имя</string>
+    <string name="profile_hint_about">О себе</string>
+    <string name="profile_hint_repository">Репозиторий</string>
+
 </resources>
