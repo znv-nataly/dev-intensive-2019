@@ -28,7 +28,8 @@
             android:id="@+id/btn_edit"
             android:background="@drawable/btn_round_bg" app:layout_constraintTop_toTopOf="@+id/iv_avatar"
             app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
-            app:layout_constraintStart_toEndOf="@+id/iv_avatar" android:layout_marginStart="32dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+            android:layout_marginStart="@dimen/spacing_huge_32"
             android:contentDescription="@string/app_name"/>
     <ImageButton
             android:layout_width="@dimen/btn_round_size_40"
@@ -38,7 +39,8 @@
             android:background="@drawable/btn_round_bg"
             app:layout_constraintTop_toTopOf="@+id/iv_avatar"
             app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
-            app:layout_constraintEnd_toStartOf="@+id/iv_avatar" android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+            android:layout_marginEnd="@dimen/spacing_huge_32"
             android:contentDescription="@string/app_name"/>
     <TextView
             android:text="@string/profile_user_name"
@@ -70,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:background="?attr/colorAccentedSurface"/>
     <View
-            android:layout_width="1dp"
+            android:layout_width="@dimen/profile_divider_height"
             android:layout_height="0dp"
             android:id="@+id/v_metrics_divider"
             app:layout_constraintEnd_toEndOf="parent"
@@ -177,7 +179,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/profile_divider_height"
         android:id="@+id/v_divider_1"
         android:background="?attr/colorDivider"
         app:layout_constraintTop_toBottomOf="@id/wr_last_name"
@@ -218,7 +220,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/profile_divider_height"
         android:id="@+id/v_divider_2"
         android:background="?attr/colorDivider"
         app:layout_constraintStart_toStartOf="parent"
@@ -238,7 +240,7 @@
             android:layout_marginTop="@dimen/spacing_normal_16"/>
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/wr_repo"
+            android:id="@+id/wr_repository"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/ic_repo"
@@ -259,8 +261,8 @@
             app:srcCompat="@drawable/ic_eye_24dp"
             android:id="@+id/ic_eye"
             android:contentDescription="@string/app_name" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/wr_repo"
-            android:layout_marginEnd="@dimen/spacing_normal_16" app:layout_constraintBottom_toBottomOf="@id/wr_repo"
-            app:layout_constraintStart_toEndOf="@id/wr_repo" android:layout_marginStart="@dimen/spacing_normal_16"/>
+            app:layout_constraintTop_toTopOf="@id/wr_repository"
+            android:layout_marginEnd="@dimen/spacing_normal_16" app:layout_constraintBottom_toBottomOf="@id/wr_repository"
+            app:layout_constraintStart_toEndOf="@id/wr_repository" android:layout_marginStart="@dimen/spacing_normal_16"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,10 +14,11 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile_constraint.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 
-class MainActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
 
     companion object {
 //        const val SAVE_STATE_STATUS = "STATUS"
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 v.text = it[k].toString()
             }
         }
+        tv_nick_name.text = Utils.transliteration(profile.firstName + " " + profile.lastName, "_")
     }
 
     private fun initViews(savedInstanceState: Bundle?) {
