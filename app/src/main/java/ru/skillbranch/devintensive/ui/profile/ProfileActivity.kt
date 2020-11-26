@@ -61,7 +61,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun updateTheme(theme: Int) {
         Log.d("M_ProfileActivity", "updateTheme $theme")
-        delegate.localNightMode = theme // activity будет пересоздана
+        delegate.setLocalNightMode(theme) // activity будет пересоздана
     }
 
     private fun updateUI(profile: Profile) {
