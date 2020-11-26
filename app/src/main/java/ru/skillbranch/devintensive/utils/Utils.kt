@@ -1,6 +1,5 @@
 package ru.skillbranch.devintensive.utils
 
-import java.util.*
 
 object Utils {
 
@@ -62,5 +61,27 @@ object Utils {
             initials += lastNameTrim.getOrNull(0)?.toUpperCase().toString()
 
         return initials
+    }
+
+    fun isValidRepositoryUrl(url: String): Boolean {
+        if (url.isEmpty()) return true
+
+        var urlCheck = url
+        val regexDomain = Regex("""(github\.com/|https://github\.com/|www\.github\.com/|https://www\.github\.com/)""")
+        val isDomain = regexDomain.containsMatchIn(urlCheck)
+        if (!isDomain) return false
+
+        urlCheck = regexDomain.replaceFirst(urlCheck, "")
+        if (urlCheck.isEmpty()) return false
+
+        val isUserName = Regex("""^([a-zA-Z0-9]+-?[a-zA-Z0-9]+)""").containsMatchIn(urlCheck)
+        if (!isUserName) return false
+
+        val isException = Regex("""(enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join)""").matches(urlCheck)
+        if (isException) return false
+
+        urlCheck = Regex("""[a-zA-Z0-9]+-?[a-zA-Z0-9]+""").replaceFirst(urlCheck, "")
+
+        return Regex("""/""").replaceFirst(urlCheck, "").isEmpty()
     }
 }
