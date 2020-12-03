@@ -122,8 +122,8 @@ class ProfileActivity : AppCompatActivity() {
 
         })
 
-        iv_avatar.setBorderColor("#ffffff")
-        iv_avatar.setBorderWidth(12)
+//        iv_avatar.setBorderColor("#ffffff")
+//        iv_avatar.setBorderWidth(12)
     }
 
     private fun showCurrentMode(isEdit: Boolean) {

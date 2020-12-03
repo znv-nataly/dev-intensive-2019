@@ -29,14 +29,17 @@ class CircleImageView @JvmOverloads constructor(context: Context,
     private var widthSpecSize = 0    // Control initial setting width
     private var heightSpecSize = 0  // Control initial setting width
 
+    private val density = context.resources.displayMetrics.density
+
     init {
 
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
             cvBorderColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, Color.WHITE)
-            cvBorderWidth = a.getDimension(R.styleable.CircleImageView_cv_borderWidth, 2f).toInt()
+            cvBorderWidth = a.getDimension(R.styleable.CircleImageView_cv_borderWidth, 0f).toInt()
             a.recycle() // защита от неэффективного использования ресурсов
         }
+
         cvBitmapPaint.isAntiAlias = true // Turn on anti-aliasing
         cvBorderPaint.color = cvBorderColor  // Set the border color
         cvBorderPaint.isAntiAlias = true
@@ -159,7 +162,7 @@ class CircleImageView @JvmOverloads constructor(context: Context,
      * @param borderWidth
      */
     fun setBorderWidth(@Dimension borderWidth: Int) {
-        cvBorderWidth = borderWidth
+        cvBorderWidth = Math.round(borderWidth * density + 0.5f)
         this.invalidate()
     }
 
@@ -168,7 +171,9 @@ class CircleImageView @JvmOverloads constructor(context: Context,
      * Получение значения ширины границы
      */
     @Dimension
-    fun getBorderWidth(): Int = cvBorderWidth
+    fun getBorderWidth(): Int {
+        return Math.round((cvBorderWidth - 0.5f)/density)
+    }
 
     /**
      * Изменение цвета границы
@@ -195,5 +200,6 @@ class CircleImageView @JvmOverloads constructor(context: Context,
      * Получение цвета границы
      */
     fun getBorderColor(): Int = cvBorderColor
+
 
 }
