@@ -9,20 +9,28 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:srcCompat="@drawable/profile_bg"
-            android:id="@+id/imageView" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:scaleType="centerCrop"
-            android:contentDescription="@string/app_name" app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintHorizontal_bias="0.0"/>
-    <ImageView
+
+    <ru.skillbranch.devintensive.ui.custom.CircleImageView
+            android:id="@+id/iv_avatar"
             android:layout_width="@dimen/avatar_round_size"
             android:layout_height="@dimen/avatar_round_size"
-            app:srcCompat="@drawable/avatar_default"
-            android:id="@+id/iv_avatar"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app_name"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintBottom_toTopOf="@+id/tv_nick_name" android:contentDescription="@string/app_name"/>
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintBottom_toTopOf="@+id/tv_nick_name"
+            app:cv_borderColor="@android:color/white"
+            app:cv_borderWidth="2dp" />
     <ImageButton
             android:layout_width="@dimen/btn_round_size_40"
             android:layout_height="@dimen/btn_round_size_40" app:srcCompat="@drawable/ic_edit_black_24dp"
