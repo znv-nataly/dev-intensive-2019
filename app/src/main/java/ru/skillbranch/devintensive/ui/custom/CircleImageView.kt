@@ -159,6 +159,8 @@ class CircleImageView @JvmOverloads constructor(context: Context,
 
     /**
      * Изменение ширины границы
+     * dp = (int - 0.5f)/density
+     * Resources.getSystem().displayMetrics.density
      * @param borderWidth
      */
     fun setBorderWidth(@Dimension borderWidth: Int) {
