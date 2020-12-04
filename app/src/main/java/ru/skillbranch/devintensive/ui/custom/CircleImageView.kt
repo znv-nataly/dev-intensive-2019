@@ -9,6 +9,8 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.annotation.Dimension
 import java.lang.Exception
 import ru.skillbranch.devintensive.R
+import android.content.res.Resources.NotFoundException
+import androidx.core.content.res.ResourcesCompat
 
 
 // @JvmOverloads при компиляции будет создано 3 конструктора, для каждого из возможных аргументов
@@ -192,8 +194,12 @@ class CircleImageView @JvmOverloads constructor(context: Context,
      * @param borderColor
      */
     fun setBorderColor(borderColor: Int) {
-        cvBorderPaint.color = borderColor
-        cvBorderColor = borderColor
+        if (isColorResource(borderColor)) {
+            cvBorderPaint.color = context.getColor(borderColor)
+        } else {
+            cvBorderPaint.color = borderColor
+        }
+        cvBorderColor = cvBorderPaint.color
         this.invalidate()
     }
 
@@ -204,4 +210,15 @@ class CircleImageView @JvmOverloads constructor(context: Context,
     fun getBorderColor(): Int = cvBorderColor
 
 
+    /**
+     * Является ли числове значение идентификатором ресурса
+     */
+    private fun isColorResource(value: Int): Boolean {
+        return try {
+            ResourcesCompat.getColor(resources, value, null)
+            true
+        } catch (e: NotFoundException) {
+            false
+        }
+    }
 }
