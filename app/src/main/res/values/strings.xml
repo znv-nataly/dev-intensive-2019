@@ -12,5 +12,6 @@
     <string name="profile_hint_first_name">Имя</string>
     <string name="profile_hint_about">О себе</string>
     <string name="profile_hint_repository">Репозиторий</string>
+    <string name="menu_search_item">Поиск</string>
 
 </resources>

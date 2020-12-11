@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
@@ -9,7 +10,7 @@ const val HOUR = 60 * MINUTE
 const val DAY = 24 * HOUR
 
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy", locale: Locale = Locale("ru")): String {
-    val dateFormat = java.text.SimpleDateFormat(pattern, locale)
+    val dateFormat = SimpleDateFormat(pattern, locale)
     return dateFormat.format(this)
 }
 
@@ -70,6 +71,18 @@ fun Date.humanizeDiff(date: Date = Date()): String {
     }
 
     return result
+}
+
+fun Date.shortFormat(): String? {
+    val pattern = if(this.isSameDay(Date())) "HH:mm" else "dd.MM.yy"
+    val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
+    return dateFormat.format(this)
+}
+
+fun Date.isSameDay(date: Date): Boolean {
+    val day1 = this.time / DAY
+    val day2 = date.time / DAY
+    return day1 == day2
 }
 
 enum class TimeUnits {
