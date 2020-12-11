@@ -16,4 +16,6 @@
 
     <string name="toolbar_title_group_activity">Создание группы</string>
 
+    <string name="snake_bar_action_title_cancel">Отмена</string>
+
 </resources>

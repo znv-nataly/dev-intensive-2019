@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.addToArchive(it.id)
             Snackbar
                 .make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG)
-                .setAction("Нет") { _ -> viewModel.restoreFromArchive(it.id) }
+                .setAction(R.string.snake_bar_action_title_cancel) { _ -> viewModel.restoreFromArchive(it.id) }
                 .show()
         }
         val touchHelper = ItemTouchHelper(touchCallback)
