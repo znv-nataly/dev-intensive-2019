@@ -3,7 +3,8 @@ package ru.skillbranch.devintensive.models.data
 import androidx.annotation.VisibleForTesting
 import ru.skillbranch.devintensive.extensions.shortFormat
 import ru.skillbranch.devintensive.models.BaseMessage
-import ru.skillbranch.devintensive.models.User
+import ru.skillbranch.devintensive.models.ImageMessage
+import ru.skillbranch.devintensive.models.TextMessage
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
@@ -16,20 +17,34 @@ data class Chat(
 ) {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun unreadableMessageCount(): Int {
-        //TODO implement me
-        return 0
+        return if (messages.size == 0) 0 else messages.filter { it is TextMessage && !it.isRead }.size
+    }
+
+    /**
+     * Возвращает дату последнего сообщения
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun lastMessageDate(): Date? {
+        return if (messages.size == 0) {
+            null
+        } else {
+            messages.sortBy { it.date }
+            messages.last().date
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private fun lastMessageDate(): Date? {
-        //TODO implement me
-        return Date()
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private fun lastMessageShort(): Pair<String, String?> { //= when(val lastMessage = messages.lastOrNull()){
-       //TODO implement me
-        return "Сообщений еще нет" to "@John Doe"
+    fun lastMessageShort(): Pair<String, String?> { //= when(val lastMessage = messages.lastOrNull()){
+        return if (messages.size == 0) {
+            "Сообщений еще нет" to null //"@John Doe"
+        } else {
+            messages.sortBy { it.date }
+            return when(val lastMessage = messages.last()) {
+                is TextMessage -> lastMessage.text.orEmpty() to lastMessage.from.firstName
+                is ImageMessage -> "${lastMessage.from.firstName.orEmpty()} отправил фото" to lastMessage.from.firstName
+                else -> "" to ""
+            }
+        }
     }
 
     private fun isSingle(): Boolean = members.size == 1

@@ -5,7 +5,7 @@ import ru.skillbranch.devintensive.extensions.TimeUnits
 import ru.skillbranch.devintensive.extensions.add
 import ru.skillbranch.devintensive.models.BaseMessage
 import ru.skillbranch.devintensive.models.TextMessage
-import ru.skillbranch.devintensive.models.User
+import ru.skillbranch.devintensive.models.data.User
 import ru.skillbranch.devintensive.models.data.Chat
 import java.util.*
 import kotlin.random.Random
@@ -447,7 +447,7 @@ object DataGenerator {
                     chat,
                     true,
                     user.lastVisit ?: Date(),
-                    //false,
+                    false,
                     randomTextPayload()
                 )
             )

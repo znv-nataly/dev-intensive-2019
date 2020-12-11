@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chat Dev Intensive</string>
+    <string name="app_name">Dev-Intensive Chat</string>
     <string name="input_text">Введите текст</string>
 
     <string name="profile_user_name">John Doe</string>
@@ -13,5 +13,7 @@
     <string name="profile_hint_about">О себе</string>
     <string name="profile_hint_repository">Репозиторий</string>
     <string name="menu_search_item">Поиск</string>
+
+    <string name="toolbar_title_group_activity">Создание группы</string>
 
 </resources>

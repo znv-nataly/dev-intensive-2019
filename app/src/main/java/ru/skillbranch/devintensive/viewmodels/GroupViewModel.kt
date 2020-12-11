@@ -2,7 +2,6 @@ package ru.skillbranch.devintensive.viewmodels
 
 import androidx.lifecycle.*
 import ru.skillbranch.devintensive.extensions.mutableLiveData
-import ru.skillbranch.devintensive.models.User
 import ru.skillbranch.devintensive.models.data.UserItem
 import ru.skillbranch.devintensive.repositories.GroupRepository
 
