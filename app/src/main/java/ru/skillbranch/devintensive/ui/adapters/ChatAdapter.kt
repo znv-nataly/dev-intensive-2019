@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.ui.adapters
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -115,6 +116,7 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
 
     inner class GroupViewHolder(convertView: View): ChatItemViewHolder(convertView), ItemTouchViewHolder {
 
+        @SuppressLint("SetTextI18n")
         override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {
 
             iv_avatar_group.setInitials(item.initials)
@@ -129,7 +131,7 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
             }
             with(tv_message_author) {
                 visibility = if (item.lastMessageDate != null) View.VISIBLE else View.GONE
-                text = item.author
+                text = "@" + item.author
             }
             tv_title_group.text = item.title
             tv_message_group.text = item.shortDescription
@@ -148,8 +150,9 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
     }
 
     inner class ArchiveItemViewHolder(convertView: View): ChatItemViewHolder(convertView), ItemTouchViewHolder {
+        @SuppressLint("SetTextI18n")
         override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {
-            tv_message_author_archive.text = item.author
+            tv_message_author_archive.text = "@" + item.author
             tv_message_archive.text = item.shortDescription
 
             with(tv_date_archive) {
