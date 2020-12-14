@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_chat_archive.*
 import kotlinx.android.synthetic.main.item_chat_group.*
 import kotlinx.android.synthetic.main.item_chat_single.*
 import ru.skillbranch.devintensive.R
@@ -30,7 +31,7 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
         return when(viewType) {
             SINGLE_TYPE -> SingleViewHolder(inflater.inflate(R.layout.item_chat_single, parent, false))
             GROUP_TYPE -> GroupViewHolder(inflater.inflate(R.layout.item_chat_group, parent, false))
-            else -> SingleViewHolder(inflater.inflate(R.layout.item_chat_single, parent, false))
+            else -> ArchiveItemViewHolder(inflater.inflate(R.layout.item_chat_archive, parent, false))
         }
     }
 
@@ -41,10 +42,13 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
         holder.bind(items[position], listener)
     }
 
-    override fun getItemViewType(position: Int): Int = when(items[position].chatType) {
-        ChatType.ARCHIVE -> ARCHIVE_TYPE
-        ChatType.SINGLE -> SINGLE_TYPE
-        ChatType.GROUP -> GROUP_TYPE
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0 && items.any { it.chatType == ChatType.ARCHIVE }) {
+            ARCHIVE_TYPE
+        } else if (items[position].chatType == ChatType.SINGLE) {
+            SINGLE_TYPE
+        } else
+            GROUP_TYPE
     }
 
     fun updateData(data: List<ChatItem>) {
@@ -141,5 +145,34 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
         override fun onItemCleared() {
             itemView.setBackgroundColor(Color.WHITE)
         }
+    }
+
+    inner class ArchiveItemViewHolder(convertView: View): ChatItemViewHolder(convertView), ItemTouchViewHolder {
+        override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {
+            tv_message_author_archive.text = item.author
+            tv_message_archive.text = item.shortDescription
+
+            with(tv_date_archive) {
+                visibility = if (item.lastMessageDate != null) View.VISIBLE else View.GONE
+                text = item.lastMessageDate
+            }
+
+            with(tv_counter_archive) {
+                visibility = if (item.messageCount > 0) View.VISIBLE else View.GONE
+                text = item.messageCount.toString()
+            }
+            itemView.setOnClickListener {
+                listener.invoke(item)
+            }
+        }
+
+        override fun onItemSelected() {
+
+        }
+
+        override fun onItemCleared() {
+
+        }
+
     }
 }

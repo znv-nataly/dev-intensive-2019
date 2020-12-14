@@ -18,4 +18,6 @@
 
     <string name="snake_bar_action_title_cancel">Отмена</string>
 
+    <string name="chat_item_archive_title">Архив чатов</string>
+
 </resources>

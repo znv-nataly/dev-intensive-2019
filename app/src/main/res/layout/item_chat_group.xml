@@ -59,7 +59,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:textColor="@color/color_gray_dark"
-            android:textSize="10sp"
+            android:textSize="@dimen/font_tiny_10"
             android:text="18:00"/>
     <TextView
             android:id="@+id/tv_counter_group"
@@ -73,7 +73,7 @@
             android:minWidth="@dimen/counter_size"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="10sp"
+            android:textSize="@dimen/font_tiny_10"
             android:text="11"/>
 
 </RelativeLayout>

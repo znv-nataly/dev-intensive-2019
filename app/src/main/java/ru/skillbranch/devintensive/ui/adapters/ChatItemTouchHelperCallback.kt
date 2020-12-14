@@ -11,8 +11,8 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.ChatItem
 
 class ChatItemTouchHelperCallback(
-    val adapter: ChatAdapter,
-    val swipeListener: (ChatItem) -> Unit
+    private val adapter: ChatAdapter,
+    private val swipeListener: (ChatItem) -> Unit
 ): ItemTouchHelper.Callback() {
 
     private val bgRect = RectF()
@@ -20,10 +20,10 @@ class ChatItemTouchHelperCallback(
     private val iconBounds = Rect()
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        return if (viewHolder is ItemTouchViewHolder) {
-            makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.START)
-        } else {
-            makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.START)
+        return when (viewHolder) {
+            is ChatAdapter.ArchiveItemViewHolder -> makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.START)
+            is ItemTouchViewHolder -> makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.START)
+            else -> makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.START)
         }
     }
 

@@ -12,6 +12,7 @@ class MainViewModel: ViewModel() {
 
     private val query = mutableLiveData("")
     private val chatRepository: ChatRepository = ChatRepository
+    private var archiveUnreadableMessageCount = 0
 
     // подписываемся на чаты, которые получаем из чат-репозитория, трансформируем их в ChatItem
     // и фильтруем
@@ -22,6 +23,17 @@ class MainViewModel: ViewModel() {
             .sortedBy { it.id.toInt() }
     }
 
+    private val archiveChats = Transformations.map(chatRepository.loadChats()) { archiveChats ->
+        archiveUnreadableMessageCount = 0
+        return@map archiveChats
+            .filter { it.isArchived }
+            .map {
+                archiveUnreadableMessageCount += it.unreadableMessageCount()
+                it
+            }
+            .sortedBy { it.id.toInt() }
+    }
+
     fun getChatData(): LiveData<List<ChatItem>> {
         val result = MediatorLiveData<List<ChatItem>>()
 
@@ -29,14 +41,26 @@ class MainViewModel: ViewModel() {
             val queryStr = query.value!!
             val chats = chats.value!!
 
-            result.value = if(queryStr.isEmpty()) chats
+            result.value = if(queryStr.isEmpty()) getChatsWithArchiveItem()
                             else chats.filter { it.title.contains(queryStr, true) }
         }
         with(result) {
             addSource(chats) { filterFunction.invoke() }
+            addSource(archiveChats) { filterFunction.invoke() }
             addSource(query) { filterFunction.invoke() }
         }
         return result
+    }
+
+    private fun getChatsWithArchiveItem(): List<ChatItem> {
+        if (archiveChats.value != null && archiveChats.value!!.isNotEmpty()) {
+            return listOf(getArchiveChatItem()) + chats.value!!
+        }
+        return chats.value!!
+    }
+
+    private fun getArchiveChatItem(): ChatItem {
+        return archiveChats.value!!.last().toArchiveChatItem(archiveUnreadableMessageCount)
     }
 
 //    private fun loadChats(): List<ChatItem> {

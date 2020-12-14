@@ -40,8 +40,8 @@ data class Chat(
         } else {
             messages.sortBy { it.date }
             return when(val lastMessage = messages.last()) {
-                is TextMessage -> lastMessage.text.orEmpty() to lastMessage.from.firstName
-                is ImageMessage -> "${lastMessage.from.firstName.orEmpty()} отправил фото" to lastMessage.from.firstName
+                is TextMessage -> lastMessage.text.orEmpty() to "@${lastMessage.from.firstName}"
+                is ImageMessage -> "${lastMessage.from.firstName.orEmpty()} отправил фото" to "@${lastMessage.from.firstName}"
                 else -> "" to ""
             }
         }
@@ -56,7 +56,7 @@ data class Chat(
                 id,
                 user.avatar,
                 Utils.toInitials(user.firstName, user.lastName) ?: "??",
-                "${user.firstName ?: ""} ${user.lastName ?: ""}",
+                "@${user.firstName ?: ""} ${user.lastName ?: ""}",
                 lastMessageShort().first,
                 unreadableMessageCount(),
                 lastMessageDate()?.shortFormat(),
@@ -76,6 +76,23 @@ data class Chat(
                 lastMessageShort().second
             )
         }
+    }
+
+    fun toArchiveChatItem(unreadableMessageCount: Int = 0): ChatItem {
+        val lastMessageShortInfo = lastMessageShort()
+        return ChatItem(
+            id,
+            null,
+            "",
+            "",
+            lastMessageShortInfo.first,
+            unreadableMessageCount,
+            lastMessageDate()?.shortFormat(),
+            false,
+            ChatType.ARCHIVE,
+            if (members.size == 1) "@${members.first().firstName}"
+            else lastMessageShortInfo.second
+        )
     }
 }
 

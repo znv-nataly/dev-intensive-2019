@@ -4,6 +4,7 @@
     <dimen name="font_large_20">20sp</dimen>
     <dimen name="font_normal_16">16sp</dimen>
     <dimen name="font_small_12">12sp</dimen>
+    <dimen name="font_tiny_10">12sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_maximum_72">72dp</dimen>
