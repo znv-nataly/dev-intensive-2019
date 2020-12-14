@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_profile_constraint.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.utils.Profile
 import ru.skillbranch.devintensive.utils.Utils
-import ru.skillbranch.devintensive.utils.ProfileViewModel
+import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 
 class ProfileActivity : AppCompatActivity() {

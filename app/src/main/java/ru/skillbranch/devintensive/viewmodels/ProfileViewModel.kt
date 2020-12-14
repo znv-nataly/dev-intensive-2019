@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.utils
+package ru.skillbranch.devintensive.viewmodels
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
