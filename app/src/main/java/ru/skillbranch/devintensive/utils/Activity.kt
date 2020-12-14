@@ -1,11 +1,8 @@
-package ru.skillbranch.devintensive.extensions
+package ru.skillbranch.devintensive.utils
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Rect
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.activity_profile.*
 
 fun Activity.hideKeyboard() {
 //    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
