@@ -8,7 +8,6 @@ import ru.skillbranch.devintensive.extensions.mutableLiveData
 import ru.skillbranch.devintensive.models.BaseMessage
 import ru.skillbranch.devintensive.models.TextMessage
 import ru.skillbranch.devintensive.models.data.ChatItem
-import ru.skillbranch.devintensive.models.data.ChatType
 import ru.skillbranch.devintensive.repositories.ChatRepository
 
 class MainViewModel: ViewModel() {
@@ -44,9 +43,9 @@ class MainViewModel: ViewModel() {
 
         val filterFunction = {
             val queryStr = query.value!!
-            val chats = chats.value!!
+            val chats = getChatsWithArchiveItem()
 
-            result.value = if(queryStr.isEmpty()) getChatsWithArchiveItem()
+            result.value = if(queryStr.isEmpty()) chats
                             else chats.filter { it.title.contains(queryStr, true) }
         }
         with(result) {
