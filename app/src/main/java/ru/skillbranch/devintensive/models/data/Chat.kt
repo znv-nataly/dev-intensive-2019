@@ -78,7 +78,7 @@ data class Chat(
         }
     }
 
-    fun toArchiveChatItem(unreadableMessageCount: Int = 0): ChatItem {
+    fun toArchiveChatItem(): ChatItem {
         val lastMessageShortInfo = lastMessageShort()
         return ChatItem(
             id,
@@ -86,12 +86,15 @@ data class Chat(
             "",
             "",
             lastMessageShortInfo.first,
-            unreadableMessageCount,
+            messages.size,
             lastMessageDate()?.shortFormat(),
             false,
             ChatType.ARCHIVE,
-            if (members.size == 1) "${members.first().firstName}"
-            else lastMessageShortInfo.second
+            when {
+                messages.size > 0 -> lastMessageShortInfo.second
+                members.size == 1 -> "${members.first().firstName}"
+                else -> ""
+            }
         )
     }
 }

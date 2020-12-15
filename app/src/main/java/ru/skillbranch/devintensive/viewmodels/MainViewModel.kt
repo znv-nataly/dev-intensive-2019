@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import ru.skillbranch.devintensive.extensions.mutableLiveData
+import ru.skillbranch.devintensive.models.BaseMessage
 import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.repositories.ChatRepository
 
@@ -12,7 +13,7 @@ class MainViewModel: ViewModel() {
 
     private val query = mutableLiveData("")
     private val chatRepository: ChatRepository = ChatRepository
-    private var archiveUnreadableMessageCount = 0
+    private var unreadableMessages: MutableList<BaseMessage> = mutableListOf()
 
     // подписываемся на чаты, которые получаем из чат-репозитория, трансформируем их в ChatItem
     // и фильтруем
@@ -24,11 +25,11 @@ class MainViewModel: ViewModel() {
     }
 
     private val archiveChats = Transformations.map(chatRepository.loadChats()) { archiveChats ->
-        archiveUnreadableMessageCount = 0
+        unreadableMessages = mutableListOf()
         return@map archiveChats
             .filter { it.isArchived }
             .map {
-                archiveUnreadableMessageCount += it.unreadableMessageCount()
+                unreadableMessages.addAll(it.messages.toMutableList())
                 it
             }
             .sortedBy { it.id.toInt() }
@@ -60,7 +61,10 @@ class MainViewModel: ViewModel() {
     }
 
     private fun getArchiveChatItem(): ChatItem {
-        return archiveChats.value!!.last().toArchiveChatItem(archiveUnreadableMessageCount)
+        unreadableMessages.sortBy { it.date }
+        val chat = archiveChats.value!!.last()
+        chat.messages = unreadableMessages
+        return chat.toArchiveChatItem()
     }
 
 //    private fun loadChats(): List<ChatItem> {
