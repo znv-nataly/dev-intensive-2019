@@ -78,13 +78,16 @@ data class Chat(
         }
     }
 
+    /**
+     * Формирование 0-го элемента списка чатов "Архив чатов"
+     */
     fun toArchiveChatItem(): ChatItem {
         val lastMessageShortInfo = lastMessageShort()
         return ChatItem(
             id,
             null,
             "",
-            "",
+            "archive chats",
             lastMessageShortInfo.first,
             messages.size,
             lastMessageDate()?.shortFormat(),
