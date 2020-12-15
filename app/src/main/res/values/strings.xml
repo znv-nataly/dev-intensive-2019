@@ -14,7 +14,9 @@
     <string name="profile_hint_repository">Репозиторий</string>
     <string name="menu_search_item">Поиск</string>
 
+    <string name="toolbar_title_main_activity">@string/app_name</string>
     <string name="toolbar_title_group_activity">Создание группы</string>
+    <string name="toolbar_title_archive_activity">Архив чатов</string>
 
     <string name="snake_bar_action_title_cancel">Отмена</string>
 

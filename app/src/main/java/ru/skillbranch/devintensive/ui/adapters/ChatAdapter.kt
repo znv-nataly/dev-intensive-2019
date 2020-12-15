@@ -1,6 +1,7 @@
 package ru.skillbranch.devintensive.ui.adapters
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.item_chat_single.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.models.data.ChatType
+import ru.skillbranch.devintensive.ui.archive.ArchiveActivity
 
 class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapter<ChatAdapter.ChatItemViewHolder>() {
 
@@ -165,7 +167,8 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit): RecyclerView.Adapte
                 text = item.messageCount.toString()
             }
             itemView.setOnClickListener {
-                listener.invoke(item)
+                val intent = Intent(itemView.context, ArchiveActivity::class.java)
+                itemView.context.startActivity(intent)
             }
         }
 
