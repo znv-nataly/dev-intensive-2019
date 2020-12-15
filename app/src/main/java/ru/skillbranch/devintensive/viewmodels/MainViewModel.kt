@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import ru.skillbranch.devintensive.extensions.mutableLiveData
 import ru.skillbranch.devintensive.models.BaseMessage
+import ru.skillbranch.devintensive.models.TextMessage
 import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.repositories.ChatRepository
 
@@ -29,7 +30,9 @@ class MainViewModel: ViewModel() {
         return@map archiveChats
             .filter { it.isArchived }
             .map {
-                unreadableMessages.addAll(it.messages.toMutableList())
+                val messagesUnread = it.messages.filter { m -> m is TextMessage && !m.isRead }.toMutableList()
+                if (messagesUnread.size > 0)
+                    unreadableMessages.addAll(messagesUnread)
                 it
             }
             .sortedBy { it.id.toInt() }
@@ -62,8 +65,7 @@ class MainViewModel: ViewModel() {
 
     private fun getArchiveChatItem(): ChatItem {
         unreadableMessages.sortBy { it.date }
-        val chat = archiveChats.value!!.last()
-        chat.messages = unreadableMessages
+        val chat = archiveChats.value!!.last().copy(messages = unreadableMessages)
         return chat.toArchiveChatItem()
     }
 
