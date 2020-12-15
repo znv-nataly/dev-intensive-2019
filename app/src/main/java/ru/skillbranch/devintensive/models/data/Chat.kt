@@ -87,7 +87,7 @@ data class Chat(
             id,
             null,
             "",
-            "archive chats",
+            title,
             lastMessageShortInfo.first,
             messages.size,
             lastMessageDate()?.shortFormat(),
