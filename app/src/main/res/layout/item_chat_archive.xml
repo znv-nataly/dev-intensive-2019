@@ -8,15 +8,22 @@
         android:padding="@dimen/spacing_normal_16"
         android:background="@android:color/white">
 
-    <ImageView
+    <RelativeLayout
             android:id="@+id/iv_chats_archive"
             android:layout_width="@dimen/avatar_item_size"
             android:layout_height="@dimen/avatar_item_size"
-            android:src="@drawable/ic_archive_black_24dp"
-            android:contentDescription="@string/app_name"
-            android:background="@color/color_gray"
+            android:background="@drawable/bg_archive_icon"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/spacing_normal_16" />
+            android:layout_marginEnd="@dimen/spacing_normal_16">
+
+        <ImageView
+                android:layout_width="@dimen/item_chat_archive_icon_size"
+                android:layout_height="@dimen/item_chat_archive_icon_size"
+                android:src="@drawable/ic_archive_black_24dp"
+                android:contentDescription="@string/app_name"
+                android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <TextView
             android:id="@+id/tv_chats_archive_title"
