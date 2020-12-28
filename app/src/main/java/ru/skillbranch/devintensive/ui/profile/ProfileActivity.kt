@@ -74,6 +74,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
         tv_nick_name.text = Utils.transliteration(profile.firstName + " " + profile.lastName, "_")
+        iv_avatar.setInitials(Utils.toInitials(profile.firstName, profile.lastName) ?: "")
     }
 
     private fun initViews(savedInstanceState: Bundle?) {
@@ -91,7 +92,7 @@ class ProfileActivity : AppCompatActivity() {
         showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
-            iv_avatar.setImageResource(0)
+//            iv_avatar.setImageResource(0)
             if (isEditMode) saveProfileInfo()
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
@@ -268,6 +269,7 @@ class ProfileActivity : AppCompatActivity() {
             repository = et_repository.text.toString()
         ).apply {
             viewModel.saveProfileDate(this)
+            iv_avatar.setInitials(Utils.toInitials(firstName, lastName) ?: "")
         }
     }
 }
