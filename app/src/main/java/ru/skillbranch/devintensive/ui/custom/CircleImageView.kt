@@ -8,7 +8,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -59,7 +61,7 @@ class CircleImageView @JvmOverloads constructor(
             typedArray.recycle()
         }
         scaleType = ScaleType.CENTER_CROP
-        isAvatarMode = drawable != null
+//        isAvatarMode = drawable != null
         setup()
     }
 
@@ -79,7 +81,6 @@ class CircleImageView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        Log.d("M_AvatarImageViewMask", "onSizeChanged")
 
         if (w == 0) return
 
@@ -153,7 +154,7 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     fun setInitials(initials: String) {
-        this.initials = initials
+        this.initials = if (initials.isEmpty()) DEFAULT_INITIALS else initials
         if (!isAvatarMode) {
             invalidate()
         }
@@ -184,6 +185,13 @@ class CircleImageView @JvmOverloads constructor(
     @Dimension
     fun getBorderWidth(): Int {
         return Math.round(borderWidth/density)
+    }
+
+    fun setAvatarMode(isAvatarMode: Boolean) {
+        if (this.isAvatarMode != isAvatarMode) {
+            this.isAvatarMode = isAvatarMode
+            invalidate()
+        }
     }
 
     fun getBorderColor(): Int = borderColor
@@ -236,31 +244,27 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun drawInitials(canvas: Canvas) {
-        initialsPaint.color = context.getColor(R.color.color_accent)
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorAccent, typedValue, true)
+        @ColorInt val colorAccent = typedValue.data
+        initialsPaint.color = colorAccent
         canvas.drawOval(
             viewRect.left.toFloat(),
             viewRect.top.toFloat(),
             viewRect.right.toFloat(),
             viewRect.bottom.toFloat(),
             initialsPaint)
+
         with(initialsPaint) {
             color = Color.WHITE
             textAlign = Paint.Align.CENTER
-            textSize = height * 0.33f
+            textSize = height * 0.5f
         }
         // descent - нижняя граница шрифта
         // ascent - верхняя граница шрифта
         val offsetY = (initialsPaint.descent() + initialsPaint.ascent()) / 2
         canvas.drawText(initials, viewRect.exactCenterX(), viewRect.exactCenterY() - offsetY, initialsPaint)
     }
-
-//    private fun initialsToColor(letters: String): Int {
-//        val b = letters[0].toByte()
-//        val len = bgColors.size
-//        val d = b / len.toDouble()
-//        val index = ((d - truncate(d)) * len).toInt()
-//        return bgColors[index]
-//    }
 
     private fun dpToPx(dp: Int): Float {
         return dp.toFloat() * density

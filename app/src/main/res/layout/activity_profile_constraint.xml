@@ -17,13 +17,12 @@
             android:scaleType="centerCrop"
             android:contentDescription="@string/app_name"
             app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintHorizontal_bias="0.0" />
 
     <ru.skillbranch.devintensive.ui.custom.CircleImageView
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/avatar_round_size"
             android:layout_height="@dimen/avatar_round_size"
-            android:scaleType="centerCrop"
             android:contentDescription="@string/app_name"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"

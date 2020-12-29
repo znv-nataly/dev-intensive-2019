@@ -92,7 +92,6 @@ class ProfileActivity : AppCompatActivity() {
         showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
-//            iv_avatar.setImageResource(0)
             if (isEditMode) saveProfileInfo()
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
@@ -122,9 +121,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
         })
-
-//        iv_avatar.setBorderColor("#ffffff")
-//        iv_avatar.setBorderWidth(12)
+        iv_avatar.setAvatarMode(false)
     }
 
     private fun showCurrentMode(isEdit: Boolean) {
